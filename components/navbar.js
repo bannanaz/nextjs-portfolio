@@ -19,6 +19,11 @@ export default function Navbar() {
             <a>Contact</a>
           </Link>
         </li>
+        <li>
+          <Link href="/contact">
+            <a>Blog</a>
+          </Link>
+        </li>
       </ul>
     </>
   );
