@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import Navbar from "./navbar";
 import Footer from "./footer";
 
