@@ -8,7 +8,7 @@ export default function Navbar() {
   return (
     <StyledDiv>
       <Grid container>
-        <Grid item sm={6} md={9}>
+        <Grid item xs={9} sm={6} md={9}>
           <Typography variant="h1">Anna Pettersson</Typography>
         </Grid>
         <Grid item sm={2} md={1}>
