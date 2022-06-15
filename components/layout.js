@@ -23,7 +23,7 @@ export default function Layout({ children }) {
 
   return (
     <>
-      {!isMobile ? <MobileNavbar /> : ""}
+      {!isMobile ? <Navbar /> : ""}
       {isMobile ? <MobileHeader /> : ""}
       <main>{children}</main>
       <Footer />
