@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
@@ -28,7 +27,7 @@ export default function MobileNavbar() {
 
 const StyledDiv = styled.div`
   width: 100%;
-  background: #f8f0f0;
+  background: white;
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
