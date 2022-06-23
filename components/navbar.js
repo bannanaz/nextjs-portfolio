@@ -47,30 +47,3 @@ const StyledDiv = styled.div`
   top: 0;
   background: white;
 `;
-
-const StyledLink = styled.a`
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  margin: 16px 0px;
-  &:after {
-    content: "";
-    position: absolute;
-    width: 120%;
-    transform: scaleX(0);
-    height: 1px;
-    bottom: -3px;
-    left: -5px;
-    background-color: #967070;
-    transform-origin: bottom right;
-    transition: transform 0.5s ease-out;
-  }
-  &:hover:after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-  &:active {
-    color: #967070;
-    border-radius: 3px;
-  }
-`;

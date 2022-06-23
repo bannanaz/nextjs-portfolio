@@ -11,10 +11,10 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: left;
   align-items: center;
+  width: auto;
 
   p {
     margin: 0px;
-    font-size: 1.2em;
     color: white;
   }
 `;
