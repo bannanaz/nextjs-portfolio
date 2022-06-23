@@ -12,35 +12,44 @@ export default function Footer() {
       <StyledWrapper>
         <Divider width="100%" />
         <Typography variant="body1" mt={3}>
-          Powered by <StyledSpan>Bannanaz</StyledSpan>
+          Powered by{" "}
+          <StyledSpan>
+            <StyledLink
+              href="https://github.com/bannanaz"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Bannanaz
+            </StyledLink>
+          </StyledSpan>
         </Typography>
       </StyledWrapper>
       <StyledWrapper2>
         <StyledDiv>
           <StyledColumn>
             <p>Contact:</p>
-            <StyledLink
+            <StyledLink2
               href="mailto:anlepet@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               anlepet@gmail.com
-            </StyledLink>
+            </StyledLink2>
             <br></br>
-            <StyledLink
+            <StyledLink2
               href="https://www.linkedin.com/in/anlepet/"
               target="_blank"
               rel="noopener noreferrer"
             >
               Linkedin
-            </StyledLink>
-            <StyledLink
+            </StyledLink2>
+            <StyledLink2
               href="https://github.com/bannanaz"
               target="_blank"
               rel="noopener noreferrer"
             >
               Github
-            </StyledLink>
+            </StyledLink2>
           </StyledColumn>
           <Weather />
         </StyledDiv>
@@ -82,8 +91,10 @@ const StyledDiv = styled.div`
   flex-wrap: wrap;
   align-items: start;
   color: white;
+  padding-top: 10px;
   @media screen and (max-width: 600px) {
     justify-content: center;
+    padding-top: 0px;
   }
 `;
 
@@ -91,6 +102,7 @@ const StyledColumn = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 7px;
+  color: white;
   @media screen and (max-width: 600px) {
     padding-top: 5px;
     align-items: center;
@@ -109,14 +121,19 @@ const StyledColumn = styled.div`
   }
 `;
 
-const StyledRow = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
 const StyledLink = styled.a`
   font-size: 16px;
-  color: white;
+  font-weight: 600;
+  padding-bottom: 10px;
+
+  &:hover {
+    cursor: pointer;
+    color: gray;
+  }
+`;
+
+const StyledLink2 = styled.a`
+  font-size: 16px;
   font-weight: 500;
   padding-bottom: 10px;
 
