@@ -13,7 +13,7 @@ export default function Navbar() {
     <StyledDiv>
       <Grid container>
         <Grid item xs={9} sm={6} md={9}>
-          <Typography variant="h1">Anna Pettersson</Typography>
+          <Typography variant="h2">Anna Pettersson</Typography>
         </Grid>
         <Grid item sm={2} md={1}>
           <Button className={router.pathname == "/" ? styles.active : ""}>

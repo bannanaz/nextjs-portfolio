@@ -32,7 +32,6 @@ function Weather() {
       console.error(error.message);
     }
     setLoading(false);
-    console.log(data);
   };
 
   useEffect(() => {

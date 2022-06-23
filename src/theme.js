@@ -22,6 +22,11 @@ const theme = createTheme({
     fontWeightMedium: 500,
     fontWeightBold: 600,
     h1: {
+      fontSize: 50,
+      fontWeight: 700,
+      color: "#212121",
+    },
+    h2: {
       fontSize: 18,
       paddingTop: 10,
       fontWeight: 600,

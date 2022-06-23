@@ -1,9 +1,6 @@
 import styled from "@emotion/styled";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Link from "next/link";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import Weather from "./weather";
 
 export default function Footer() {
@@ -73,13 +70,13 @@ const StyledSpan = styled.span`
 
 const StyledWrapper2 = styled.div`
   width: 100%;
-  height: 280px;
+  height: 270px;
   background: #212121;
   position: static;
   bottom: 0;
-  padding-top: 40px;
+  padding-top: 35px;
   @media screen and (max-width: 600px) {
-    padding-top: 35px;
+    height: 280px;
   }
 `;
 

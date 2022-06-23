@@ -6,7 +6,6 @@ export default function IsMobile() {
   const updateScreenSize = () => {
     if (window !== "undefined") {
       setMobile(window.innerWidth < 600);
-      console.log(isMobile);
     }
   };
 
