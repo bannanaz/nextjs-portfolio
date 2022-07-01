@@ -17,14 +17,14 @@ export default function Home() {
       <StyledWrapper>
         <Grid container>
           <Grid item xs={12} sm={10} md={7}>
-            <Typography variant="h1" mb={3}>
+            <Typography variant="h1" mb={4}>
               Front-end Developer with a creative mindset
             </Typography>
           </Grid>
         </Grid>
       </StyledWrapper>
       <Grid container>
-        <Grid item xs={12} sm={8} height={400} sx={{ position: "relative" }}>
+        <Grid item xs={12} md={8} height={400} sx={{ position: "relative" }}>
           <Image
             src={
               "https://raw.githubusercontent.com/bannanaz/images/main/img/sayhi2.jpg"
@@ -40,7 +40,7 @@ export default function Home() {
         <Grid
           item
           xs={12}
-          sm={4}
+          md={4}
           height={400}
           sx={{ position: "relative", object: "fit" }}
         >
@@ -59,33 +59,33 @@ export default function Home() {
         <Grid
           item
           xs={12}
-          sm={4}
+          md={4}
           height={400}
           sx={{ position: "relative", object: "fit" }}
         >
           <Image
             src={
-              "https://raw.githubusercontent.com/bannanaz/images/main/img/calculator.png"
+              "https://raw.githubusercontent.com/bannanaz/images/main/img/covid_chart.jpg"
             }
             alt="Example image"
             layout={"fill"}
             objectFit={"cover"}
           />
           <StyledOverlayBlack>
-            <StyledTextOverlay>Calculator</StyledTextOverlay>
+            <StyledTextOverlay>Covid tracker</StyledTextOverlay>
           </StyledOverlayBlack>
         </Grid>
-        <Grid item xs={12} sm={8} height={400} sx={{ position: "relative" }}>
+        <Grid item xs={12} md={8} height={400} sx={{ position: "relative" }}>
           <Image
             src={
-              "https://raw.githubusercontent.com/bannanaz/images/main/img/covid_tracker.jpg"
+              "https://raw.githubusercontent.com/bannanaz/images/main/img/splendid2.jpg"
             }
             alt="Example image"
             layout={"fill"}
             objectFit={"cover"}
           />
           <StyledOverlay>
-            <StyledTextOverlay>Covid tracker</StyledTextOverlay>
+            <StyledTextOverlay>Splendid</StyledTextOverlay>
           </StyledOverlay>
         </Grid>
       </Grid>
