@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 
@@ -14,41 +15,80 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <StyledWrapper>
-        <Typography sx={{ width: "50%" }} variant="h1">
-          Front-end Developer with a creative mindset
-        </Typography>
+        <Grid container>
+          <Grid item xs={12} sm={10} md={7}>
+            <Typography variant="h1" mb={3}>
+              Front-end Developer with a creative mindset
+            </Typography>
+          </Grid>
+        </Grid>
       </StyledWrapper>
-      <main>
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+      <Grid container>
+        <Grid item xs={12} sm={8} height={400} sx={{ position: "relative" }}>
+          <Image
+            src={
+              "https://raw.githubusercontent.com/bannanaz/images/main/img/sayhi2.jpg"
+            }
+            alt="Example image"
+            layout={"fill"}
+            objectFit={"cover"}
+          />
+          <StyledOverlay>
+            <StyledTextOverlay>Say hi!</StyledTextOverlay>
+          </StyledOverlay>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={4}
+          height={400}
+          sx={{ position: "relative", object: "fit" }}
+        >
+          <Image
+            src={
+              "https://raw.githubusercontent.com/bannanaz/images/main/img/calculator.png"
+            }
+            alt="Example image"
+            layout={"fill"}
+            objectFit={"cover"}
+          />
+          <StyledOverlayBlack>
+            <StyledTextOverlay>Calculator</StyledTextOverlay>
+          </StyledOverlayBlack>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={4}
+          height={400}
+          sx={{ position: "relative", object: "fit" }}
+        >
+          <Image
+            src={
+              "https://raw.githubusercontent.com/bannanaz/images/main/img/calculator.png"
+            }
+            alt="Example image"
+            layout={"fill"}
+            objectFit={"cover"}
+          />
+          <StyledOverlayBlack>
+            <StyledTextOverlay>Calculator</StyledTextOverlay>
+          </StyledOverlayBlack>
+        </Grid>
+        <Grid item xs={12} sm={8} height={400} sx={{ position: "relative" }}>
+          <Image
+            src={
+              "https://raw.githubusercontent.com/bannanaz/images/main/img/covid_tracker.jpg"
+            }
+            alt="Example image"
+            layout={"fill"}
+            objectFit={"cover"}
+          />
+          <StyledOverlay>
+            <StyledTextOverlay>Covid tracker</StyledTextOverlay>
+          </StyledOverlay>
+        </Grid>
+      </Grid>
     </div>
   );
 }
@@ -58,4 +98,63 @@ const StyledWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 25px 0px;
+  @media screen and (max-width: 600px) {
+    width: 85%;
+    padding-top: 0px;
+    padding-bottom: 25px;
+  }
+`;
+
+const StyledOverlay = styled.div`
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.7s ease;
+  background-color: #fc4046;
+  z-index: 5;
+
+  :hover {
+    opacity: 0.96;
+    cursor: pointer;
+  }
+`;
+
+const StyledTextOverlay = styled.div`
+  color: white;
+  font-size: 40px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+`;
+
+const StyledOverlayBlack = styled.div`
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.7s ease;
+  background-color: black;
+  z-index: 5;
+
+  :hover {
+    opacity: 0.85;
+    cursor: pointer;
+  }
 `;

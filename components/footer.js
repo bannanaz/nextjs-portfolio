@@ -61,7 +61,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 0px;
+  padding: 35px 0px 25px 0px;
 `;
 
 const StyledSpan = styled.span`
@@ -125,7 +125,7 @@ const StyledLink = styled.a`
 
   &:hover {
     cursor: pointer;
-    color: gray;
+    color: #bdbdbd;
   }
 `;
 
@@ -136,6 +136,6 @@ const StyledLink2 = styled.a`
 
   &:hover {
     cursor: pointer;
-    color: lightgray;
+    color: #e0e0e0;
   }
 `;

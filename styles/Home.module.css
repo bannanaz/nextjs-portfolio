@@ -107,7 +107,8 @@
 }
 
 .active {
-  color: #039e65;
+  /*color: #039e65;*/
+  color: #fc4046;
 }
 
 @media (max-width: 600px) {
