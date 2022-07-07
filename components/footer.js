@@ -7,9 +7,8 @@ export default function Footer() {
   return (
     <>
       <StyledWrapper>
-        <Divider width="100%" />
-        <Typography variant="body1" mt={3}>
-          Powered by{" "}
+        <Typography variant="body1">
+          Created by{" "}
           <StyledSpan>
             <StyledLink
               href="https://github.com/bannanaz"
@@ -61,7 +60,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 35px 0px 25px 0px;
+  padding: 50px 0px 50px 0px;
 `;
 
 const StyledSpan = styled.span`

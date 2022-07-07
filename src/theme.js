@@ -32,6 +32,11 @@ const theme = createTheme({
       fontWeight: 600,
       color: "#212121",
     },
+    h3: {
+      fontSize: 26,
+      fontWeight: 600,
+      color: "#212121",
+    },
   },
   components: {
     MuiButton: {
