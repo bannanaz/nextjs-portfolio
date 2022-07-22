@@ -8,7 +8,7 @@ export default function Footer() {
     <>
       <StyledWrapper>
         <Typography variant="body1">
-          Created by{" "}
+          Powered by{" "}
           <StyledSpan>
             <StyledLink
               href="https://github.com/bannanaz"

@@ -8,7 +8,7 @@ const theme = createTheme({
       main: "#212121",
     },
     secondary: {
-      main: "#19857b",
+      main: "#fc4046",
     },
     error: {
       main: red.A400,
@@ -27,13 +27,18 @@ const theme = createTheme({
       color: "#212121",
     },
     h2: {
-      fontSize: 18,
+      fontSize: 19,
       paddingTop: 10,
       fontWeight: 600,
       color: "#212121",
     },
     h3: {
       fontSize: 26,
+      fontWeight: 600,
+      color: "#212121",
+    },
+    h4: {
+      fontSize: 16,
       fontWeight: 600,
       color: "#212121",
     },
@@ -44,7 +49,7 @@ const theme = createTheme({
         root: {
           textTransform: "none",
           fontWeight: 600,
-          fontSize: 16,
+          fontSize: 17,
         },
       },
     },

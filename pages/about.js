@@ -42,7 +42,7 @@ export default function About() {
             </Typography>
             <Typography
               variant="body1"
-              sx={{ wordSpacing: "10px", maxWidth: "500px" }}
+              sx={{ wordSpacing: "10px", maxWidth: "520px" }}
             >
               React.js Next.js Vue.js Vuex Node Javascript HTML5 CSS3 Emotion
               Material-UI Vuetify Figma Git/Github Scrum Photoshop Indesign
@@ -57,7 +57,7 @@ export default function About() {
 }
 
 const StyledWrapper = styled.div`
-  width: 90%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
   @media screen and (max-width: 600px) {
