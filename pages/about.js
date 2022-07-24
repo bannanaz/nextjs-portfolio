@@ -57,7 +57,7 @@ export default function About() {
 }
 
 const StyledWrapper = styled.div`
-  width: 80%;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
   @media screen and (max-width: 600px) {
