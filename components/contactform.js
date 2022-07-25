@@ -31,11 +31,37 @@ export default function ContactForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(values);
+
+    let data = {
+      values,
+    };
+
+    fetch("/api/hello", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      console.log("Response received");
+      if (res.status === 200) {
+        console.log("Response succeeded!");
+        setSubmitted(true);
+        /*setValues({
+          ...values,
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });*/
+      }
+    });
   };
 
   return (
     <>
-      <Header title="Say hello!" />
+      <Header title="Say Hello!" />
       <StyledWrapper>
         <Grid container wrap="wrap-reverse">
           <Grid item xs={12} md={8} sx={{ background: "#eeeeee" }}>
@@ -103,7 +129,7 @@ export default function ContactForm() {
               </Button>
             </StyledForm>
           </Grid>
-          <Grid item xs={12} md={4} sx={{ background: "#b2dfdb" }}>
+          <Grid item xs={12} md={4} sx={{ background: "#01579b" }}>
             <StyledForm>
               <Typography variant="h3" mb={2}>
                 Details
