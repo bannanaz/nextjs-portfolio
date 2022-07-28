@@ -46,15 +46,10 @@ export default function ContactForm() {
     }).then((res) => {
       console.log("Response received");
       if (res.status === 200) {
+        res.send();
         console.log("Response succeeded!");
         setSubmitted(true);
-        /*setValues({
-          ...values,
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });*/
+        setValues("");
       }
     });
   };
