@@ -11,6 +11,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import PlaceIcon from "@mui/icons-material/Place";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 export default function ContactForm() {
   const [values, setValues] = useState({
@@ -19,7 +20,27 @@ export default function ContactForm() {
     subject: "",
     message: "",
   });
+
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    subject: false,
+    message: false,
+  });
+
+  const [helperTexts, setHelperTexts] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
   const [submitted, setSubmitted] = useState(false);
+
+  const [errorName, setErrorName] = useState(null);
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorSubject, setErrorSubject] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleChange = (e) => {
     setValues({
@@ -28,35 +49,214 @@ export default function ContactForm() {
     });
   };
 
+  const validateInput = (e) => {
+    const nameRegex =
+      /^[a-zA-ZÆÐƎƏƐƔĲŊŒẞÞǷȜæðǝəɛɣĳŋœĸſßþƿȝĄƁÇĐƊĘĦĮƘŁØƠŞȘŢȚŦŲƯY̨Ƴąɓçđɗęħįƙłøơşșţțŧųưy̨ƴÁÀÂÄǍĂĀÃÅǺĄÆǼǢƁĆĊĈČÇĎḌĐƊÐÉÈĖÊËĚĔĒĘẸƎƏƐĠĜǦĞĢƔáàâäǎăāãåǻąæǽǣɓćċĉčçďḍđɗðéèėêëěĕēęẹǝəɛġĝǧğģɣĤḤĦIÍÌİÎÏǏĬĪĨĮỊĲĴĶƘĹĻŁĽĿʼNŃN̈ŇÑŅŊÓÒÔÖǑŎŌÕŐỌØǾƠŒĥḥħıíìiîïǐĭīĩįịĳĵķƙĸĺļłľŀŉńn̈ňñņŋóòôöǒŏōõőọøǿơœŔŘŖŚŜŠŞȘṢẞŤŢṬŦÞÚÙÛÜǓŬŪŨŰŮŲỤƯẂẀŴẄǷÝỲŶŸȲỸƳŹŻŽẒŕřŗſśŝšşșṣßťţṭŧþúùûüǔŭūũűůųụưẃẁŵẅƿýỳŷÿȳỹƴźżžẓ\s-,.\']+$/;
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    //Name validation
+    if (e.target.name === "name") {
+      if (e.target.value.length < 1) {
+        setHelperTexts({
+          ...helperTexts,
+          name: "Name is required",
+        });
+        setErrors({
+          ...errors,
+          name: true,
+        });
+      } else if (!e.target.value.match(nameRegex)) {
+        setHelperTexts({
+          ...helperTexts,
+          name: "Please enter a valid name",
+        });
+        setErrors({
+          ...errors,
+          name: true,
+        });
+      } else {
+        setHelperTexts({
+          ...helperTexts,
+          name: "",
+        });
+        setErrors({
+          ...errors,
+          name: false,
+        });
+      }
+    }
+    //Email validation
+    if (e.target.name === "email") {
+      if (e.target.value.length < 1) {
+        setHelperTexts({
+          ...helperTexts,
+          email: "Email is required",
+        });
+        setErrors({
+          ...errors,
+          email: true,
+        });
+      } else if (!e.target.value.match(emailRegex)) {
+        setHelperTexts({
+          ...helperTexts,
+          email: "Please enter a valid email",
+        });
+        setErrors({
+          ...errors,
+          email: true,
+        });
+      } else {
+        setHelperTexts({
+          ...helperTexts,
+          email: "",
+        });
+        setErrors({
+          ...errors,
+          email: false,
+        });
+      }
+    }
+    //Subject validation
+    if (e.target.name === "subject") {
+      if (e.target.value.length < 1) {
+        setHelperTexts({
+          ...helperTexts,
+          subject: "Subject is required",
+        });
+        setErrors({
+          ...errors,
+          subject: true,
+        });
+      } else {
+        setHelperTexts({
+          ...helperTexts,
+          subject: "",
+        });
+        setErrors({
+          ...errors,
+          subject: false,
+        });
+      }
+    }
+    //Message validation
+    if (e.target.name === "message") {
+      if (e.target.value.length < 1) {
+        setHelperTexts({
+          ...helperTexts,
+          message: "Message is required",
+        });
+        setErrors({
+          ...errors,
+          message: true,
+        });
+      } else {
+        setHelperTexts({
+          ...helperTexts,
+          message: "",
+        });
+        setErrors({
+          ...errors,
+          message: false,
+        });
+      }
+    }
+  };
+
+  const isFormValid = () => {
+    if (
+      errors.name === false &&
+      errors.email === false &&
+      errors.message === false &&
+      errors.subject === false &&
+      values.name != "" &&
+      values.email != "" &&
+      values.message != "" &&
+      values.subject != ""
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
-
     let data = {
       values,
     };
-
-    fetch("/api/hello", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      console.log("Response received");
-      if (res.status === 200) {
-        res.send();
-        console.log("Response succeeded!");
-        setSubmitted(true);
-        setValues("");
-      }
-    });
+    if (isFormValid()) {
+      fetch("/api/hello", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status === 200) {
+          console.log("Response succeeded!");
+          setSubmitted(true);
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+          });
+        }
+      });
+    } else {
+      setSubmitted(false);
+      console.log("Submit failed!");
+    }
   };
+
+  /*const validateName = (e) => {
+    const name = e.target.value;
+    const nameRegex =
+      /^[a-zA-ZÆÐƎƏƐƔĲŊŒẞÞǷȜæðǝəɛɣĳŋœĸſßþƿȝĄƁÇĐƊĘĦĮƘŁØƠŞȘŢȚŦŲƯY̨Ƴąɓçđɗęħįƙłøơşșţțŧųưy̨ƴÁÀÂÄǍĂĀÃÅǺĄÆǼǢƁĆĊĈČÇĎḌĐƊÐÉÈĖÊËĚĔĒĘẸƎƏƐĠĜǦĞĢƔáàâäǎăāãåǻąæǽǣɓćċĉčçďḍđɗðéèėêëěĕēęẹǝəɛġĝǧğģɣĤḤĦIÍÌİÎÏǏĬĪĨĮỊĲĴĶƘĹĻŁĽĿʼNŃN̈ŇÑŅŊÓÒÔÖǑŎŌÕŐỌØǾƠŒĥḥħıíìiîïǐĭīĩįịĳĵķƙĸĺļłľŀŉńn̈ňñņŋóòôöǒŏōõőọøǿơœŔŘŖŚŜŠŞȘṢẞŤŢṬŦÞÚÙÛÜǓŬŪŨŰŮŲỤƯẂẀŴẄǷÝỲŶŸȲỸƳŹŻŽẒŕřŗſśŝšşșṣßťţṭŧþúùûüǔŭūũűůųụưẃẁŵẅƿýỳŷÿȳỹƴźżžẓ\s-,.\']+$/;
+    const multipleCharRegex = /(?!^\s-,.+$)^.*$/m;
+    if (name.length === 0) {
+      setErrorName("Name is required");
+    } else if (!name.match(nameRegex)) {
+      setErrorName("Please enter a valid name");
+    } else {
+      setErrorName("");
+    }
+  };
+
+  const validateEmail = (e) => {
+    const email = e.target.value;
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email.length === 0) {
+      setErrorEmail("Email is required");
+    } else if (!email.match(emailRegex)) {
+      setErrorEmail("Please enter a valid email");
+    } else {
+      setErrorEmail("");
+    }
+  };
+
+  const validateSubject = (e) => {
+    const subject = e.target.value;
+    if (subject.length === 0) {
+      setErrorSubject("Subject is required");
+    } else {
+      setErrorSubject("");
+    }
+  };
+
+  const validateMessage = (e) => {
+    const subject = e.target.value;
+    if (subject.length === 0) {
+      setErrorMessage("Message is required");
+    } else {
+      setErrorMessage("");
+    }
+  };*/
 
   return (
     <>
-      <Header title="Say Hello!" />
+      <Header title="Say Hello" />
       <StyledWrapper>
         <Grid container wrap="wrap-reverse">
           <Grid item xs={12} md={8} sx={{ background: "#eeeeee" }}>
@@ -67,50 +267,71 @@ export default function ContactForm() {
               <Grid container columnSpacing={2}>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    label="Name"
+                    label="Name *"
                     name="name"
                     variant="outlined"
-                    margin="normal"
+                    margin="none"
                     fullWidth
-                    sx={{ background: "white" }}
+                    sx={{ background: "white", mb: "40px" }}
                     value={values.name}
                     onChange={handleChange}
+                    onBlur={validateInput}
+                    error={errors.name}
+                    helperText={helperTexts.name}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    label="Email"
+                    label="Email *"
                     name="email"
                     variant="outlined"
-                    margin="normal"
+                    margin="none"
+                    inputProps={{
+                      maxLength: 50,
+                    }}
                     fullWidth
-                    sx={{ background: "white" }}
+                    sx={{ background: "white", mb: "40px" }}
                     value={values.email}
                     onChange={handleChange}
+                    onBlur={validateInput}
+                    error={errors.email}
+                    helperText={helperTexts.email}
                   />
                 </Grid>
               </Grid>
               <TextField
-                label="Subject"
+                label="Subject *"
                 name="subject"
                 variant="outlined"
-                margin="normal"
+                margin="none"
+                inputProps={{
+                  maxLength: 50,
+                }}
                 fullWidth
-                sx={{ background: "white" }}
+                sx={{ background: "white", mb: "40px" }}
                 value={values.subject}
                 onChange={handleChange}
+                onBlur={validateInput}
+                error={errors.subject}
+                helperText={helperTexts.subject}
               />
               <TextField
-                label="Message"
+                label="Message *"
                 name="message"
                 variant="outlined"
-                margin="normal"
+                margin="none"
                 fullWidth
                 multiline
                 minRows={4}
-                sx={{ background: "white" }}
+                sx={{ background: "white", mb: "40px" }}
                 value={values.message}
                 onChange={handleChange}
+                onBlur={validateInput}
+                error={errors.message}
+                helperText={helperTexts.message}
+                inputProps={{
+                  maxLength: 500,
+                }}
               />
               <Button
                 variant="contained"
@@ -124,25 +345,47 @@ export default function ContactForm() {
               </Button>
             </StyledForm>
           </Grid>
-          <Grid item xs={12} md={4} sx={{ background: "#01579b" }}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            color="white"
+            sx={{ background: "#213d69" }}
+          >
             <StyledForm>
-              <Typography variant="h3" mb={2}>
+              <Typography variant="h3" color="white" mb={2}>
                 Details
               </Typography>
               <StyledWrapperRight>
                 <StyledDiv2>
                   <EmailIcon sx={{ mb: "-6px", mr: "15px" }} />
                   <StyledDiv3>
-                    <Typography variant="h4" mb={1} sx={{ mr: "10px" }}>
+                    <Typography
+                      variant="h4"
+                      color="white"
+                      mb={1}
+                      sx={{ mr: "10px" }}
+                    >
                       Email:
                     </Typography>
-                    <StyledLink>anlepet@gmail.com</StyledLink>
+                    <StyledLink
+                      href="mailto:anlepet@gmail.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      anlepet@gmail.com
+                    </StyledLink>
                   </StyledDiv3>
                 </StyledDiv2>
                 <StyledDiv2>
                   <PhoneIcon sx={{ mb: "-6px", mr: "15px" }} />
                   <StyledDiv3>
-                    <Typography variant="h4" mb={1} sx={{ mr: "10px" }}>
+                    <Typography
+                      variant="h4"
+                      color="white"
+                      mb={1}
+                      sx={{ mr: "10px" }}
+                    >
                       Phone:
                     </Typography>
                     <Typography variant="body1">+46 709301245</Typography>
@@ -151,16 +394,40 @@ export default function ContactForm() {
                 <StyledDiv2>
                   <PlaceIcon sx={{ mb: "-6px", mr: "15px" }} />
                   <StyledDiv3>
-                    <Typography variant="h4" mb={1} sx={{ mr: "10px" }}>
+                    <Typography
+                      variant="h4"
+                      color="white"
+                      mb={1}
+                      sx={{ mr: "10px" }}
+                    >
                       City:
                     </Typography>
                     <Typography variant="body1">Stockholm, Sweden</Typography>
                   </StyledDiv3>
                 </StyledDiv2>
+                <br></br>
                 <div>
-                  <Typography variant="h4" mb={2}>
+                  <Typography variant="h4" color="white" mb={2}>
                     <LinkedInIcon sx={{ mb: "-6px", mr: "15px" }} />
-                    Linkedin
+                    <StyledLink
+                      href="https://www.linkedin.com/in/anlepet/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </StyledLink>
+                  </Typography>
+                </div>
+                <div>
+                  <Typography variant="h4" color="white" mb={2}>
+                    <GitHubIcon sx={{ mb: "-6px", mr: "15px" }} />
+                    <StyledLink
+                      href="https://github.com/bannanaz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                    </StyledLink>
                   </Typography>
                 </div>
               </StyledWrapperRight>

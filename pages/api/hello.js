@@ -15,15 +15,17 @@ export default function handler(req, res) {
   const mailData = {
     from: "portfolio email",
     to: "bannanazportfolio@gmail.com",
-    subject: `${req.body.values.subject} From ${req.body.values.name}`,
+    subject: `${req.body.values.subject}`,
     text: req.body.message + " | Sent from: " + req.body.values.email,
-    html: `<div>${req.body.values.message}</div><p>Sent from:
-    ${req.body.values.email}</p>`,
+    html: `<p>Sent from: ${req.body.values.name}</p>
+    <p>Contact email: ${req.body.values.email}</p>
+    <div>Message: ${req.body.values.message}</div>`,
   };
   transporter.sendMail(mailData, function (err, info) {
     if (err) console.log(err);
     else console.log(info);
   });
   res.status(200);
+  res.send();
   console.log(req.body);
 }

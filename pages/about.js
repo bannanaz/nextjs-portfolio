@@ -10,7 +10,7 @@ export default function About() {
       <Header title="Curricilum Vitae" />
       <StyledWrapper>
         <Grid container>
-          <Grid item xs={12} md={7} lg={6}>
+          <Grid item xs={12} lg={6}>
             <Typography variant="h3" mb={2}>
               Experience
             </Typography>
@@ -37,19 +37,20 @@ export default function About() {
                 <br></br>
               </div>
             ))}
-            <Typography variant="h3" mt={2} mb={2}>
+            <br></br>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Typography variant="h3" mb={2}>
               Skills
             </Typography>
             <Typography
               variant="body1"
               sx={{ wordSpacing: "10px", maxWidth: "520px" }}
             >
-              React.js Next.js Vue.js Vuex Node Javascript HTML5 CSS3 Emotion
+              Javascript HTML5 CSS3 React.js Next.js Vue.js Vuex Node Emotion
               Material-UI Vuetify Figma Git/Github Scrum Photoshop Indesign
             </Typography>
           </Grid>
-
-          <Grid item xs={12} md={5} lg={6}></Grid>
         </Grid>
       </StyledWrapper>
     </>
@@ -57,11 +58,11 @@ export default function About() {
 }
 
 const StyledWrapper = styled.div`
-  width: 90%;
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
   @media screen and (max-width: 600px) {
-    width: 85%;
+    width: 90%;
     padding-top: 0px;
     padding-bottom: 25px;
   }

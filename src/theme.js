@@ -53,6 +53,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#eeeeee",
+          margin: 0,
+          paddingLeft: 0,
+          left: 0,
+          bottom: -25,
+          position: "absolute",
+          zIndex: 1,
+        },
+      },
+    },
   },
 });
 

@@ -16,77 +16,79 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header title="Front-end Developer" />
-      <Grid container>
-        <Grid item xs={12} md={8} height={430} sx={{ position: "relative" }}>
-          <Image
-            src={
-              "https://raw.githubusercontent.com/bannanaz/images/main/img/sayhi2.jpg"
-            }
-            alt="Say hi, vanilla JS commentbox"
-            layout={"fill"}
-            objectFit={"cover"}
-          />
-          <StyledOverlay>
-            <StyledTextOverlay>Say hi!</StyledTextOverlay>
-          </StyledOverlay>
+      <StyledWrapper>
+        <Grid container>
+          <Grid item xs={12} md={8} height={430} sx={{ position: "relative" }}>
+            <Image
+              src={
+                "https://raw.githubusercontent.com/bannanaz/images/main/img/sayhi2.jpg"
+              }
+              alt="Say hi, vanilla JS commentbox"
+              layout={"fill"}
+              objectFit={"cover"}
+            />
+            <StyledOverlay>
+              <StyledTextOverlay>Say hi!</StyledTextOverlay>
+            </StyledOverlay>
+          </Grid>
+          <Grid item xs={12} md={4} height={430} sx={{ position: "relative" }}>
+            <Image
+              src={
+                "https://raw.githubusercontent.com/bannanaz/images/main/img/calculator.png"
+              }
+              alt="Chart from covid-tracker"
+              layout={"fill"}
+              objectFit={"cover"}
+            />
+            <StyledOverlayBlack>
+              <StyledTextOverlay>Calculator</StyledTextOverlay>
+            </StyledOverlayBlack>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            height={430}
+            sx={{ position: "relative", object: "fit" }}
+          >
+            <Image
+              src={
+                "https://raw.githubusercontent.com/bannanaz/images/main/img/covid_chart.jpg"
+              }
+              alt="Calculator in white design"
+              layout={"fill"}
+              objectFit={"cover"}
+            />
+            <StyledOverlayBlack>
+              <StyledTextOverlay>Covid tracker</StyledTextOverlay>
+            </StyledOverlayBlack>
+          </Grid>
+          <Grid item xs={12} md={8} height={430} sx={{ position: "relative" }}>
+            <Image
+              src={
+                "https://raw.githubusercontent.com/bannanaz/images/main/img/splendid4.jpg"
+              }
+              alt="Splendid online rental service"
+              layout={"fill"}
+              objectFit={"cover"}
+            />
+            <StyledOverlay>
+              <StyledTextOverlay>Splendid</StyledTextOverlay>
+            </StyledOverlay>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={4} height={430} sx={{ position: "relative" }}>
-          <Image
-            src={
-              "https://raw.githubusercontent.com/bannanaz/images/main/img/calculator.png"
-            }
-            alt="Chart from covid-tracker"
-            layout={"fill"}
-            objectFit={"cover"}
-          />
-          <StyledOverlayBlack>
-            <StyledTextOverlay>Calculator</StyledTextOverlay>
-          </StyledOverlayBlack>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          height={430}
-          sx={{ position: "relative", object: "fit" }}
-        >
-          <Image
-            src={
-              "https://raw.githubusercontent.com/bannanaz/images/main/img/covid_chart.jpg"
-            }
-            alt="Calculator in white design"
-            layout={"fill"}
-            objectFit={"cover"}
-          />
-          <StyledOverlayBlack>
-            <StyledTextOverlay>Covid tracker</StyledTextOverlay>
-          </StyledOverlayBlack>
-        </Grid>
-        <Grid item xs={12} md={8} height={430} sx={{ position: "relative" }}>
-          <Image
-            src={
-              "https://raw.githubusercontent.com/bannanaz/images/main/img/splendid4.jpg"
-            }
-            alt="Splendid online rental service"
-            layout={"fill"}
-            objectFit={"cover"}
-          />
-          <StyledOverlay>
-            <StyledTextOverlay>Splendid</StyledTextOverlay>
-          </StyledOverlay>
-        </Grid>
-      </Grid>
+      </StyledWrapper>
     </div>
   );
 }
 
 const StyledWrapper = styled.div`
-  width: 90%;
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
-  padding: 25px 0px;
+  padding: 25px 0px 0px 0px;
   @media screen and (max-width: 600px) {
-    width: 85%;
+    width: 90%;
     padding-top: 0px;
     padding-bottom: 25px;
   }
