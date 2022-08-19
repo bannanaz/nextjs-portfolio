@@ -37,7 +37,8 @@ export default function ContactForm() {
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const [openFailDialog, setOpenFailDialog] = useState(false);
 
   const handleChange = (e) => {
     setValues({
@@ -159,9 +160,13 @@ export default function ContactForm() {
   };
 
   const timerRef = useRef(null);
-  const handleOpen = () => {
-    setOpen(true);
-    timerRef.current = setTimeout(() => setOpen(false), 1500);
+  const handleOpenSuccess = () => {
+    setOpenSuccessDialog(true);
+    timerRef.current = setTimeout(() => setOpenSuccessDialog(false), 1500);
+  };
+  const handleOpenFail = () => {
+    setOpenFailDialog(true);
+    timerRef.current = setTimeout(() => setOpenFailDialog(false), 1500);
   };
 
   const handleSubmit = (e) => {
@@ -169,18 +174,6 @@ export default function ContactForm() {
     let data = {
       values,
     };
-    if (!values.name) {
-      setErrors({
-        ...errors,
-        name: true,
-      });
-    }
-    if (!values.email) {
-      setErrors({
-        ...errors,
-        email: true,
-      });
-    }
     if (
       !errors.name &&
       !errors.email &&
@@ -202,7 +195,7 @@ export default function ContactForm() {
         if (res.status === 200) {
           console.log("Response succeeded!");
           setSubmitted(true);
-          handleOpen();
+          handleOpenSuccess();
           setValues({
             ...values,
             name: "",
@@ -212,6 +205,8 @@ export default function ContactForm() {
           });
         }
       });
+    } else {
+      handleOpenFail();
     }
   };
 
@@ -304,7 +299,7 @@ export default function ContactForm() {
                 Send Message
               </Button>
             </StyledForm>
-            <Dialog open={open}>
+            <Dialog open={openSuccessDialog}>
               <Alert
                 severity="success"
                 sx={{
@@ -314,11 +309,21 @@ export default function ContactForm() {
                 Your message has been sent!
               </Alert>
             </Dialog>
+            <Dialog open={openFailDialog}>
+              <Alert
+                severity="error"
+                sx={{
+                  margin: "auto",
+                }}
+              >
+                Please fill out all fields correctly!
+              </Alert>
+            </Dialog>
           </Grid>
           <Grid item xs={12} md={4} color="white" className="contact">
             <StyledWrapperRight>
               <StyledDiv2>
-                <EmailIcon sx={{ mr: "15px" }} />
+                <EmailIcon sx={{ mb: "-6px", mr: "15px" }} />
                 <StyledDiv3>
                   <Typography
                     variant="h4"
@@ -348,7 +353,9 @@ export default function ContactForm() {
                   >
                     Phone:
                   </Typography>
-                  <Typography variant="body1">+46 709301245</Typography>
+                  <Typography variant="body1" mt={"-2px"}>
+                    +46 709301245
+                  </Typography>
                 </StyledDiv3>
               </StyledDiv2>
               <StyledDiv2>
@@ -362,7 +369,9 @@ export default function ContactForm() {
                   >
                     City:
                   </Typography>
-                  <Typography variant="body1">Stockholm, Sweden</Typography>
+                  <Typography variant="body1" mt={"-2px"}>
+                    Stockholm, Sweden
+                  </Typography>
                 </StyledDiv3>
               </StyledDiv2>
               <br></br>
@@ -420,7 +429,7 @@ const StyledForm = styled.form`
 `;
 
 const StyledWrapperRight = styled.div`
-  padding: 105px 50px 30px 50px;
+  padding: 105px 0px 30px 0px;
 
   @media screen and (max-width: 900px) {
     margin-top: 25px;

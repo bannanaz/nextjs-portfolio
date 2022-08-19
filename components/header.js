@@ -7,7 +7,7 @@ export default function Header(props) {
     <StyledWrapper>
       <Grid container>
         <Grid item xs={12} sm={10} md={7}>
-          <Typography variant="h1" mb={4} mt={1}>
+          <Typography variant="h1" mb={2} mt={1}>
             {props.title}
           </Typography>
         </Grid>
