@@ -1,7 +1,6 @@
 import Header from "../components/header";
 import styled from "@emotion/styled";
-import { useState } from "react";
-
+import { useState, useEffect, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -12,6 +11,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import PlaceIcon from "@mui/icons-material/Place";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import Alert from "@mui/material/Alert";
+import Dialog from "@mui/material/Dialog";
 
 export default function ContactForm() {
   const [values, setValues] = useState({
@@ -36,11 +37,7 @@ export default function ContactForm() {
   });
 
   const [submitted, setSubmitted] = useState(false);
-
-  const [errorName, setErrorName] = useState(null);
-  const [errorEmail, setErrorEmail] = useState(null);
-  const [errorSubject, setErrorSubject] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
     setValues({
@@ -161,21 +158,10 @@ export default function ContactForm() {
     }
   };
 
-  const isFormValid = () => {
-    if (
-      errors.name === false &&
-      errors.email === false &&
-      errors.message === false &&
-      errors.subject === false &&
-      values.name != "" &&
-      values.email != "" &&
-      values.message != "" &&
-      values.subject != ""
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+  const timerRef = useRef(null);
+  const handleOpen = () => {
+    setOpen(true);
+    timerRef.current = setTimeout(() => setOpen(false), 1500);
   };
 
   const handleSubmit = (e) => {
@@ -183,7 +169,28 @@ export default function ContactForm() {
     let data = {
       values,
     };
-    if (isFormValid()) {
+    if (!values.name) {
+      setErrors({
+        ...errors,
+        name: true,
+      });
+    }
+    if (!values.email) {
+      setErrors({
+        ...errors,
+        email: true,
+      });
+    }
+    if (
+      !errors.name &&
+      !errors.email &&
+      !errors.message &&
+      !errors.subject &&
+      values.name &&
+      values.email &&
+      values.message &&
+      values.subject
+    ) {
       fetch("/api/hello", {
         method: "POST",
         headers: {
@@ -195,6 +202,7 @@ export default function ContactForm() {
         if (res.status === 200) {
           console.log("Response succeeded!");
           setSubmitted(true);
+          handleOpen();
           setValues({
             ...values,
             name: "",
@@ -204,64 +212,17 @@ export default function ContactForm() {
           });
         }
       });
-    } else {
-      setSubmitted(false);
-      console.log("Submit failed!");
     }
   };
-
-  /*const validateName = (e) => {
-    const name = e.target.value;
-    const nameRegex =
-      /^[a-zA-ZÆÐƎƏƐƔĲŊŒẞÞǷȜæðǝəɛɣĳŋœĸſßþƿȝĄƁÇĐƊĘĦĮƘŁØƠŞȘŢȚŦŲƯY̨Ƴąɓçđɗęħįƙłøơşșţțŧųưy̨ƴÁÀÂÄǍĂĀÃÅǺĄÆǼǢƁĆĊĈČÇĎḌĐƊÐÉÈĖÊËĚĔĒĘẸƎƏƐĠĜǦĞĢƔáàâäǎăāãåǻąæǽǣɓćċĉčçďḍđɗðéèėêëěĕēęẹǝəɛġĝǧğģɣĤḤĦIÍÌİÎÏǏĬĪĨĮỊĲĴĶƘĹĻŁĽĿʼNŃN̈ŇÑŅŊÓÒÔÖǑŎŌÕŐỌØǾƠŒĥḥħıíìiîïǐĭīĩįịĳĵķƙĸĺļłľŀŉńn̈ňñņŋóòôöǒŏōõőọøǿơœŔŘŖŚŜŠŞȘṢẞŤŢṬŦÞÚÙÛÜǓŬŪŨŰŮŲỤƯẂẀŴẄǷÝỲŶŸȲỸƳŹŻŽẒŕřŗſśŝšşșṣßťţṭŧþúùûüǔŭūũűůųụưẃẁŵẅƿýỳŷÿȳỹƴźżžẓ\s-,.\']+$/;
-    const multipleCharRegex = /(?!^\s-,.+$)^.*$/m;
-    if (name.length === 0) {
-      setErrorName("Name is required");
-    } else if (!name.match(nameRegex)) {
-      setErrorName("Please enter a valid name");
-    } else {
-      setErrorName("");
-    }
-  };
-
-  const validateEmail = (e) => {
-    const email = e.target.value;
-    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (email.length === 0) {
-      setErrorEmail("Email is required");
-    } else if (!email.match(emailRegex)) {
-      setErrorEmail("Please enter a valid email");
-    } else {
-      setErrorEmail("");
-    }
-  };
-
-  const validateSubject = (e) => {
-    const subject = e.target.value;
-    if (subject.length === 0) {
-      setErrorSubject("Subject is required");
-    } else {
-      setErrorSubject("");
-    }
-  };
-
-  const validateMessage = (e) => {
-    const subject = e.target.value;
-    if (subject.length === 0) {
-      setErrorMessage("Message is required");
-    } else {
-      setErrorMessage("");
-    }
-  };*/
 
   return (
     <>
       <Header title="Say Hello" />
       <StyledWrapper>
-        <Grid container wrap="wrap-reverse">
+        <Grid container wrap="wrap">
           <Grid item xs={12} md={8} sx={{ background: "#eeeeee" }}>
-            <StyledForm>
-              <Typography variant="h3" mb={2}>
+            <StyledForm onSubmit={handleSubmit}>
+              <Typography variant="h3" mb={3}>
                 Get in touch
               </Typography>
               <Grid container columnSpacing={2}>
@@ -323,7 +284,7 @@ export default function ContactForm() {
                 fullWidth
                 multiline
                 minRows={4}
-                sx={{ background: "white", mb: "40px" }}
+                sx={{ background: "white", mb: "15px" }}
                 value={values.message}
                 onChange={handleChange}
                 onBlur={validateInput}
@@ -338,100 +299,98 @@ export default function ContactForm() {
                 type="submit"
                 disableElevation
                 color="secondary"
-                sx={{ mt: 3 }}
-                onClick={handleSubmit}
+                sx={{ mt: 3, mb: 2 }}
               >
                 Send Message
               </Button>
             </StyledForm>
+            <Dialog open={open}>
+              <Alert
+                severity="success"
+                sx={{
+                  margin: "auto",
+                }}
+              >
+                Your message has been sent!
+              </Alert>
+            </Dialog>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={4}
-            color="white"
-            sx={{ background: "#213d69" }}
-          >
-            <StyledForm>
-              <Typography variant="h3" color="white" mb={2}>
-                Details
-              </Typography>
-              <StyledWrapperRight>
-                <StyledDiv2>
-                  <EmailIcon sx={{ mb: "-6px", mr: "15px" }} />
-                  <StyledDiv3>
-                    <Typography
-                      variant="h4"
-                      color="white"
-                      mb={1}
-                      sx={{ mr: "10px" }}
-                    >
-                      Email:
-                    </Typography>
-                    <StyledLink
-                      href="mailto:anlepet@gmail.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      anlepet@gmail.com
-                    </StyledLink>
-                  </StyledDiv3>
-                </StyledDiv2>
-                <StyledDiv2>
-                  <PhoneIcon sx={{ mb: "-6px", mr: "15px" }} />
-                  <StyledDiv3>
-                    <Typography
-                      variant="h4"
-                      color="white"
-                      mb={1}
-                      sx={{ mr: "10px" }}
-                    >
-                      Phone:
-                    </Typography>
-                    <Typography variant="body1">+46 709301245</Typography>
-                  </StyledDiv3>
-                </StyledDiv2>
-                <StyledDiv2>
-                  <PlaceIcon sx={{ mb: "-6px", mr: "15px" }} />
-                  <StyledDiv3>
-                    <Typography
-                      variant="h4"
-                      color="white"
-                      mb={1}
-                      sx={{ mr: "10px" }}
-                    >
-                      City:
-                    </Typography>
-                    <Typography variant="body1">Stockholm, Sweden</Typography>
-                  </StyledDiv3>
-                </StyledDiv2>
-                <br></br>
-                <div>
-                  <Typography variant="h4" color="white" mb={2}>
-                    <LinkedInIcon sx={{ mb: "-6px", mr: "15px" }} />
-                    <StyledLink
-                      href="https://www.linkedin.com/in/anlepet/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      LinkedIn
-                    </StyledLink>
+          <Grid item xs={12} md={4} color="white" className="contact">
+            <StyledWrapperRight>
+              <StyledDiv2>
+                <EmailIcon sx={{ mr: "15px" }} />
+                <StyledDiv3>
+                  <Typography
+                    variant="h4"
+                    color="white"
+                    mb={1}
+                    sx={{ mr: "10px" }}
+                  >
+                    Email:
                   </Typography>
-                </div>
-                <div>
-                  <Typography variant="h4" color="white" mb={2}>
-                    <GitHubIcon sx={{ mb: "-6px", mr: "15px" }} />
-                    <StyledLink
-                      href="https://github.com/bannanaz"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GitHub
-                    </StyledLink>
+                  <StyledLink
+                    href="mailto:anlepet@gmail.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    anlepet@gmail.com
+                  </StyledLink>
+                </StyledDiv3>
+              </StyledDiv2>
+              <StyledDiv2>
+                <PhoneIcon sx={{ mb: "-6px", mr: "15px" }} />
+                <StyledDiv3>
+                  <Typography
+                    variant="h4"
+                    color="white"
+                    mb={1}
+                    sx={{ mr: "10px" }}
+                  >
+                    Phone:
                   </Typography>
-                </div>
-              </StyledWrapperRight>
-            </StyledForm>
+                  <Typography variant="body1">+46 709301245</Typography>
+                </StyledDiv3>
+              </StyledDiv2>
+              <StyledDiv2>
+                <PlaceIcon sx={{ mb: "-6px", mr: "15px" }} />
+                <StyledDiv3>
+                  <Typography
+                    variant="h4"
+                    color="white"
+                    mb={1}
+                    sx={{ mr: "10px" }}
+                  >
+                    City:
+                  </Typography>
+                  <Typography variant="body1">Stockholm, Sweden</Typography>
+                </StyledDiv3>
+              </StyledDiv2>
+              <br></br>
+              <StyledDiv2>
+                <Typography variant="h4" color="white" mb={1}>
+                  <LinkedInIcon sx={{ mb: "-6px", mr: "15px" }} />
+                  <StyledLink
+                    href="https://www.linkedin.com/in/anlepet/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    LinkedIn
+                  </StyledLink>
+                </Typography>
+              </StyledDiv2>
+              <StyledDiv2>
+                <Typography variant="h4" color="white" mb={1}>
+                  <GitHubIcon sx={{ mb: "-6px", mr: "15px" }} />
+                  <StyledLink
+                    href="https://github.com/bannanaz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </StyledLink>
+                </Typography>
+              </StyledDiv2>
+            </StyledWrapperRight>
           </Grid>
         </Grid>
       </StyledWrapper>
@@ -461,19 +420,25 @@ const StyledForm = styled.form`
 `;
 
 const StyledWrapperRight = styled.div`
-  margin-top: 50px;
+  padding: 105px 50px 30px 50px;
+
+  @media screen and (max-width: 900px) {
+    margin-top: 25px;
+    padding: 35px 25px 40px 25px;
+  }
 `;
 
 const StyledDiv2 = styled.div`
   display: flex;
   justify-content: left;
-  padding: 0px 0px 10px 0px;
+  padding: 0px 0px 18px 0px;
 `;
 
 const StyledDiv3 = styled.div`
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
+  padding-top: 2px;
 `;
 
 const StyledLink = styled.a`

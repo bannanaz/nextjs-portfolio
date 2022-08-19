@@ -14,4 +14,13 @@ a {
   box-sizing: border-box;
 }
 
-
+.contact {
+  background: #213d69;
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 900px) {
+  .contact {
+      justify-content: start;
+  }
+}
