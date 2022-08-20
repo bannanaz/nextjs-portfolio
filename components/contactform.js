@@ -353,7 +353,7 @@ export default function ContactForm() {
                   >
                     Phone:
                   </Typography>
-                  <Typography variant="body1" mt={"-2px"}>
+                  <Typography variant="body1" mt={"-1px"}>
                     +46 709301245
                   </Typography>
                 </StyledDiv3>
@@ -369,7 +369,7 @@ export default function ContactForm() {
                   >
                     City:
                   </Typography>
-                  <Typography variant="body1" mt={"-2px"}>
+                  <Typography variant="body1" mt={"-1px"}>
                     Stockholm, Sweden
                   </Typography>
                 </StyledDiv3>

@@ -13,6 +13,9 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    contrast: {
+      main: "#FFFFFF",
+    },
   },
   typography: {
     fontFamily: ["Montserrat", "sans-serif"].join(","),
@@ -42,6 +45,11 @@ const theme = createTheme({
       fontWeight: 600,
       color: "#212121",
     },
+    h4: {
+      fontSize: 18,
+      fontWeight: 600,
+      color: "#FFFFFF",
+    },
   },
   components: {
     MuiButton: {
@@ -50,6 +58,20 @@ const theme = createTheme({
           textTransform: "none",
           fontWeight: 600,
           fontSize: 17,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          borderRadius: "5px",
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          borderRadius: "4px",
         },
       },
     },
