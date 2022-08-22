@@ -13,6 +13,9 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    orange: {
+      main: "#f58976",
+    },
     contrast: {
       main: "#FFFFFF",
     },

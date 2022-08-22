@@ -69,13 +69,13 @@ const StyledSpan = styled.span`
 
 const StyledWrapper2 = styled.div`
   width: 100%;
-  height: 270px;
+  height: 400px;
   background: #212121;
   position: static;
   bottom: 0;
   padding-top: 35px;
   @media screen and (max-width: 600px) {
-    height: 280px;
+    height: 350px;
   }
 `;
 
