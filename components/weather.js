@@ -21,39 +21,68 @@ function Weather() {
   const [city, setCity] = useState("Stockholm");
   const [unit, setUnit] = useState("metric");
   const [displayUnit, setdisplayUnit] = useState("°C");
-  const [helperText, setHelpertext] = useState("Enter a city name");
+  const [helperText, setHelperText] = useState("Enter a city name");
+  const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showCityButton, setShowCityButton] = useState(true);
   const [showSelect, setShowSelect] = useState(false);
 
-  const WeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=4a7f93ba709b9f6af319b9065bd8f12e&units=${unit}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${process.env.NEXT_PUBLIC_API_KEY}&units=${unit}`;
   const IconURL = "https://openweathermap.org/img/wn/";
+
+  useEffect(() => {
+    getWeatherData();
+  }, []);
+
+  const toggleComponent = () => {
+    setShowCityButton(!showCityButton);
+    setShowSelect(!showSelect);
+  };
 
   const handleChange = (e) => {
     setCity(e.target.value);
   };
 
-  const handleClick = () => {
-    setShowCityButton(!showCityButton);
-    setShowSelect(!showSelect);
+  const validateInput = (e) => {
+    const cityRegex =
+      /^[a-zA-ZÆÐƎƏƐƔĲŊŒẞÞǷȜæðǝəɛɣĳŋœĸſßþƿȝĄƁÇĐƊĘĦĮƘŁØƠŞȘŢȚŦŲƯY̨Ƴąɓçđɗęħįƙłøơşșţțŧųưy̨ƴÁÀÂÄǍĂĀÃÅǺĄÆǼǢƁĆĊĈČÇĎḌĐƊÐÉÈĖÊËĚĔĒĘẸƎƏƐĠĜǦĞĢƔáàâäǎăāãåǻąæǽǣɓćċĉčçďḍđɗðéèėêëěĕēęẹǝəɛġĝǧğģɣĤḤĦIÍÌİÎÏǏĬĪĨĮỊĲĴĶƘĹĻŁĽĿʼNŃN̈ŇÑŅŊÓÒÔÖǑŎŌÕŐỌØǾƠŒĥḥħıíìiîïǐĭīĩįịĳĵķƙĸĺļłľŀŉńn̈ňñņŋóòôöǒŏōõőọøǿơœŔŘŖŚŜŠŞȘṢẞŤŢṬŦÞÚÙÛÜǓŬŪŨŰŮŲỤƯẂẀŴẄǷÝỲŶŸȲỸƳŹŻŽẒŕřŗſśŝšşșṣßťţṭŧþúùûüǔŭūũűůųụưẃẁŵẅƿýỳŷÿȳỹƴźżžẓ\s-,.\']+$/;
+    if (e.target.name === "city") {
+      if (e.target.value.length < 1) {
+        setHelperText("City name is required");
+        setErrors(true);
+      } else if (!e.target.value.match(cityRegex)) {
+        setHelperText("Please enter a valid city name");
+        setErrors(true);
+      } else {
+        setHelperText("Enter a city name");
+        setErrors(false);
+      }
+    }
   };
 
-  const getNewWeather = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    getData();
+    getWeatherData();
     convertUnit();
   };
 
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const { data: response } = await axios.get(WeatherURL);
-      setData(response);
-      console.log(data);
-    } catch (error) {
-      console.error(error.message);
+  const getWeatherData = () => {
+    if (isFormValid()) {
+      fetch(url)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Something went wrong");
+        })
+        .then((responseJson) => {
+          setData(responseJson);
+        })
+        .catch((error) => {
+          setErrors(true);
+          setHelperText("Failed to fetch weather data");
+        });
     }
-    setLoading(false);
   };
 
   const convertUnit = () => {
@@ -62,9 +91,13 @@ function Weather() {
     } else setdisplayUnit("°F");
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const isFormValid = () => {
+    if (errors) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <>
@@ -100,7 +133,7 @@ function Weather() {
               mr: "-4px",
               fontSize: "14px",
             }}
-            onClick={handleClick}
+            onClick={toggleComponent}
           >
             EDIT CITY
           </Button>
@@ -108,13 +141,16 @@ function Weather() {
         {showSelect && (
           <>
             <TextField
+              name="city"
               variant="outlined"
               margin="none"
               size="small"
               placeholder="Enter city name"
               defaultValue={city}
               helperText={helperText}
+              error={errors}
               onChange={handleChange}
+              onInput={validateInput}
               inputProps={{
                 maxLength: 50,
               }}
@@ -190,12 +226,12 @@ function Weather() {
               variant="outlined"
               sx={{
                 fontWeight: 500,
-                mt: "17px",
+                mt: "12px",
                 mr: "0px",
                 px: "20px",
                 fontSize: "14px",
               }}
-              onClick={getNewWeather}
+              onClick={handleSubmit}
             >
               GET WEATHER
             </Button>
@@ -204,11 +240,11 @@ function Weather() {
               color="contrast"
               sx={{
                 fontWeight: 500,
-                mt: "12px",
+                mt: "7px",
                 mr: "-5px",
                 fontSize: "14px",
               }}
-              onClick={handleClick}
+              onClick={toggleComponent}
               endIcon={<CloseIcon />}
             >
               CLOSE
@@ -224,6 +260,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
+  margin-bottom: 30px;
 `;
 
 const StyledDiv = styled.div`
@@ -238,3 +275,14 @@ const StyledDiv = styled.div`
 `;
 
 export default Weather;
+
+// `getStaticProps`, and similar Next.js methods like `getStaticPaths` and `getServerSideProps`
+// only run in Node.js. Check the terminal to see the environment variables
+export async function getStaticProps() {
+  // Using the variables below in the browser will return `undefined`. Next.js doesn't
+  // expose environment variables unless they start with `NEXT_PUBLIC_`
+  console.log("[Node.js only] ENV_VARIABLE:", process.env.API_KEY);
+  console.log("[Node.js only] ENV_LOCAL_VARIABLE:", process.env.API_KEY);
+
+  return { props: {} };
+}

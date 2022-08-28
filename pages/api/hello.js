@@ -7,7 +7,7 @@ export default function handler(req, res) {
     host: "smtp.gmail.com",
     auth: {
       user: "bannanazportfolio@gmail.com",
-      pass: process.env.password,
+      pass: process.env.PASSWORD,
     },
     secure: true,
   });
@@ -27,5 +27,4 @@ export default function handler(req, res) {
   });
   res.status(200);
   res.send();
-  console.log(req.body);
 }

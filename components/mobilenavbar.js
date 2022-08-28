@@ -26,7 +26,7 @@ export default function MobileNavbar() {
 }
 
 const StyledDiv = styled.div`
-  background: #eeeeee;
+  background: #ffffff;
   width: 100%;
   position: -webkit-sticky;
   position: sticky;
@@ -36,7 +36,7 @@ const StyledDiv = styled.div`
 `;
 
 const StyledDiv2 = styled.div`
-  background: #eeeeee;
+  background: #ffffff;
   width: 85%;
   padding-top: 10px;
   margin: auto;

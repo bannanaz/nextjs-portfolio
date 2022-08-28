@@ -193,7 +193,6 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.status === 200) {
-          console.log("Response succeeded!");
           setSubmitted(true);
           handleOpenSuccess();
           setValues({
@@ -215,10 +214,10 @@ export default function ContactForm() {
       <Header title="Say Hello" />
       <StyledWrapper>
         <Grid container wrap="wrap">
-          <Grid item xs={12} md={8} sx={{ background: "#eeeeee" }}>
+          <Grid item xs={12} md={8} lg={9} sx={{ background: "#eeeeee" }}>
             <StyledForm onSubmit={handleSubmit}>
-              <Typography variant="h3" mb={3}>
-                Get in touch
+              <Typography variant="h3" mb={3} mt={1}>
+                Get In Touch
               </Typography>
               <Grid container columnSpacing={2}>
                 <Grid item xs={12} md={6}>
@@ -320,64 +319,37 @@ export default function ContactForm() {
               </Alert>
             </Dialog>
           </Grid>
-          <Grid item xs={12} md={4} color="white" className="contact">
+          <Grid item xs={12} md={4} lg={3} color="white" className="contact">
             <StyledWrapperRight>
+              <Typography variant="h3" color="white" mb={5} mt={1}>
+                Contact Info
+              </Typography>
               <StyledDiv2>
                 <EmailIcon sx={{ mb: "-6px", mr: "15px" }} />
-                <StyledDiv3>
-                  <Typography
-                    variant="h4"
-                    color="white"
-                    mb={1}
-                    sx={{ mr: "10px" }}
-                  >
-                    Email:
-                  </Typography>
-                  <StyledLink
-                    href="mailto:anlepet@gmail.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    anlepet@gmail.com
-                  </StyledLink>
-                </StyledDiv3>
+                <StyledLink
+                  href="mailto:anlepet@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  anlepet@gmail.com
+                </StyledLink>
               </StyledDiv2>
               <StyledDiv2>
                 <PhoneIcon sx={{ mb: "-6px", mr: "15px" }} />
-                <StyledDiv3>
-                  <Typography
-                    variant="h4"
-                    color="white"
-                    mb={1}
-                    sx={{ mr: "10px" }}
-                  >
-                    Phone:
-                  </Typography>
-                  <Typography variant="body1" mt={"-1px"}>
-                    +46 709301245
-                  </Typography>
-                </StyledDiv3>
+                <Typography variant="body1" mt={"-1px"}>
+                  +46 709301245
+                </Typography>
               </StyledDiv2>
               <StyledDiv2>
                 <PlaceIcon sx={{ mb: "-6px", mr: "15px" }} />
-                <StyledDiv3>
-                  <Typography
-                    variant="h4"
-                    color="white"
-                    mb={1}
-                    sx={{ mr: "10px" }}
-                  >
-                    City:
-                  </Typography>
-                  <Typography variant="body1" mt={"-1px"}>
-                    Stockholm, Sweden
-                  </Typography>
-                </StyledDiv3>
+                <Typography variant="body1" mt={"-1px"}>
+                  Stockholm, Sweden
+                </Typography>
               </StyledDiv2>
               <br></br>
               <StyledDiv2>
-                <Typography variant="h4" color="white" mb={1}>
-                  <LinkedInIcon sx={{ mb: "-6px", mr: "15px" }} />
+                <Typography variant="h4" color="white">
+                  <LinkedInIcon size="large" sx={{ mb: "-6px", mr: "15px" }} />
                   <StyledLink
                     href="https://www.linkedin.com/in/anlepet/"
                     target="_blank"
@@ -388,7 +360,7 @@ export default function ContactForm() {
                 </Typography>
               </StyledDiv2>
               <StyledDiv2>
-                <Typography variant="h4" color="white" mb={1}>
+                <Typography variant="h4" color="white">
                   <GitHubIcon sx={{ mb: "-6px", mr: "15px" }} />
                   <StyledLink
                     href="https://github.com/bannanaz"
@@ -429,10 +401,9 @@ const StyledForm = styled.form`
 `;
 
 const StyledWrapperRight = styled.div`
-  padding: 105px 0px 30px 0px;
+  padding: 35px 0px 30px 0px;
 
   @media screen and (max-width: 900px) {
-    margin-top: 25px;
     padding: 35px 25px 40px 25px;
   }
 `;
@@ -441,13 +412,9 @@ const StyledDiv2 = styled.div`
   display: flex;
   justify-content: left;
   padding: 0px 0px 18px 0px;
-`;
-
-const StyledDiv3 = styled.div`
-  display: flex;
-  justify-content: left;
-  flex-wrap: wrap;
-  padding-top: 2px;
+  @media screen and (max-width: 900px) {
+    margin-left: 0px;
+  }
 `;
 
 const StyledLink = styled.a`

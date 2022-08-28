@@ -3,6 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
+const webpack = require("webpack");
+
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 module.exports = {
   images: {
     domains: [
