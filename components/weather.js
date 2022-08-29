@@ -18,8 +18,8 @@ import CloseIcon from "@mui/icons-material/Close";
 
 function Weather() {
   const [data, setData] = useState(null);
-  const [q, setQ] = useState("Stockholm");
-  const [units, setUnits] = useState("metric");
+  const [city, setCity] = useState("Stockholm");
+  const [unit, setUnit] = useState("metric");
   const [displayUnit, setdisplayUnit] = useState("°C");
   const [helperText, setHelperText] = useState("Enter a city name");
   const [errors, setErrors] = useState(false);
@@ -27,7 +27,7 @@ function Weather() {
   const [showCityButton, setShowCityButton] = useState(true);
   const [showSelect, setShowSelect] = useState(false);
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${q}&APPID=${process.env.NEXT_PUBLIC_API_KEY}&units=${units}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${process.env.NEXT_PUBLIC_API_KEY}&units=${unit}`;
   const IconURL = "https://openweathermap.org/img/wn/";
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function Weather() {
   };
 
   const handleChange = (e) => {
-    setQ(e.target.value);
+    setCity(e.target.value);
   };
 
   const validateInput = (e) => {
@@ -68,14 +68,15 @@ function Weather() {
 
   const getWeatherData = () => {
     if (isFormValid()) {
-      fetch(`/api/weatherapiq=${q}&units=${units}`, {
-        headers: {
-          Accept: "application/json",
-        },
-      })
-        .then((response) => response)
+      fetch(url)
         .then((response) => {
-          console.log(response.data);
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Something went wrong");
+        })
+        .then((responseJson) => {
+          setData(responseJson);
         })
         .catch((error) => {
           setErrors(true);
@@ -85,7 +86,7 @@ function Weather() {
   };
 
   const convertUnit = () => {
-    if (units === "metric") {
+    if (unit === "metric") {
       setdisplayUnit("°C");
     } else setdisplayUnit("°F");
   };
@@ -101,8 +102,7 @@ function Weather() {
   return (
     <>
       <StyledWrapper>
-        {/*<StyledDiv>
-          
+        <StyledDiv>
           {data ? (
             <Image
               src={IconURL + data.weather[0].icon + "@2x.png"}
@@ -122,7 +122,7 @@ function Weather() {
                 data.name
               : ""}
           </Typography>
-        </StyledDiv>*/}
+        </StyledDiv>
         {showCityButton && (
           <Button
             size="small"
@@ -146,7 +146,7 @@ function Weather() {
               margin="none"
               size="small"
               placeholder="Enter city name"
-              defaultValue={q}
+              defaultValue={city}
               helperText={helperText}
               error={errors}
               onChange={handleChange}
@@ -183,8 +183,8 @@ function Weather() {
                       name="metric"
                       value="metric"
                       size="small"
-                      checked={units === "metric"}
-                      onChange={(e) => setUnits(e.target.value)}
+                      checked={unit === "metric"}
+                      onChange={(e) => setUnit(e.target.value)}
                       sx={{
                         color: "#FFFFFF",
                         "&.Mui-checked": {
@@ -204,8 +204,8 @@ function Weather() {
                       name="imperial"
                       value="imperial"
                       size="small"
-                      checked={units === "imperial"}
-                      onChange={(e) => setUnits(e.target.value)}
+                      checked={unit === "imperial"}
+                      onChange={(e) => setUnit(e.target.value)}
                       sx={{
                         color: "#FFFFFF",
                         "&.Mui-checked": {
