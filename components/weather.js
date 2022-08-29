@@ -184,7 +184,7 @@ function Weather() {
                       value="metric"
                       size="small"
                       checked={units === "metric"}
-                      onChange={(e) => setUnit(e.target.value)}
+                      onChange={(e) => setUnits(e.target.value)}
                       sx={{
                         color: "#FFFFFF",
                         "&.Mui-checked": {
@@ -205,7 +205,7 @@ function Weather() {
                       value="imperial"
                       size="small"
                       checked={units === "imperial"}
-                      onChange={(e) => setUnit(e.target.value)}
+                      onChange={(e) => setUnits(e.target.value)}
                       sx={{
                         color: "#FFFFFF",
                         "&.Mui-checked": {
