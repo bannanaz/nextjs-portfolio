@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+export default async function handler(req, res) {
   require("dotenv").config();
 
   let nodemailer = require("nodemailer");
@@ -21,10 +21,13 @@ export default function handler(req, res) {
     <p>Contact email: ${req.body.values.email}</p>
     <div>Message: ${req.body.values.message}</div>`,
   };
-  transporter.sendMail(mailData, function (err, info) {
-    if (err) console.log(err);
-    else console.log(info);
-  });
-  res.status(200);
+  try {
+    await transporter.sendMail(mailData);
+  } catch (err) {
+    return {
+      statusCode: err.code,
+      body: JSON.stringify({ msg: err.message }),
+    };
+  }
   res.send();
 }
