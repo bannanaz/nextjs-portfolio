@@ -18,8 +18,8 @@ import CloseIcon from "@mui/icons-material/Close";
 
 function Weather() {
   const [data, setData] = useState(null);
-  const [city, setCity] = useState("Stockholm");
-  const [unit, setUnit] = useState("metric");
+  const [q, setQ] = useState("Stockholm");
+  const [units, setUnits] = useState("metric");
   const [displayUnit, setdisplayUnit] = useState("°C");
   const [helperText, setHelperText] = useState("Enter a city name");
   const [errors, setErrors] = useState(false);
@@ -27,7 +27,7 @@ function Weather() {
   const [showCityButton, setShowCityButton] = useState(true);
   const [showSelect, setShowSelect] = useState(false);
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${process.env.NEXT_PUBLIC_API_KEY}&units=${unit}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${q}&APPID=${process.env.NEXT_PUBLIC_API_KEY}&units=${units}`;
   const IconURL = "https://openweathermap.org/img/wn/";
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function Weather() {
   };
 
   const handleChange = (e) => {
-    setCity(e.target.value);
+    setQ(e.target.value);
   };
 
   const validateInput = (e) => {
@@ -68,15 +68,14 @@ function Weather() {
 
   const getWeatherData = () => {
     if (isFormValid()) {
-      fetch(url)
+      fetch(`/api/weatherapiq=${q}&units=${units}`, {
+        headers: {
+          Accept: "application/json",
+        },
+      })
+        .then((response) => response)
         .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Something went wrong");
-        })
-        .then((responseJson) => {
-          setData(responseJson);
+          console.log(response.data);
         })
         .catch((error) => {
           setErrors(true);
@@ -86,7 +85,7 @@ function Weather() {
   };
 
   const convertUnit = () => {
-    if (unit === "metric") {
+    if (units === "metric") {
       setdisplayUnit("°C");
     } else setdisplayUnit("°F");
   };
@@ -102,7 +101,8 @@ function Weather() {
   return (
     <>
       <StyledWrapper>
-        <StyledDiv>
+        {/*<StyledDiv>
+          
           {data ? (
             <Image
               src={IconURL + data.weather[0].icon + "@2x.png"}
@@ -122,7 +122,7 @@ function Weather() {
                 data.name
               : ""}
           </Typography>
-        </StyledDiv>
+        </StyledDiv>*/}
         {showCityButton && (
           <Button
             size="small"
@@ -146,7 +146,7 @@ function Weather() {
               margin="none"
               size="small"
               placeholder="Enter city name"
-              defaultValue={city}
+              defaultValue={q}
               helperText={helperText}
               error={errors}
               onChange={handleChange}
@@ -183,7 +183,7 @@ function Weather() {
                       name="metric"
                       value="metric"
                       size="small"
-                      checked={unit === "metric"}
+                      checked={units === "metric"}
                       onChange={(e) => setUnit(e.target.value)}
                       sx={{
                         color: "#FFFFFF",
@@ -204,7 +204,7 @@ function Weather() {
                       name="imperial"
                       value="imperial"
                       size="small"
-                      checked={unit === "imperial"}
+                      checked={units === "imperial"}
                       onChange={(e) => setUnit(e.target.value)}
                       sx={{
                         color: "#FFFFFF",
@@ -275,14 +275,3 @@ const StyledDiv = styled.div`
 `;
 
 export default Weather;
-
-// `getStaticProps`, and similar Next.js methods like `getStaticPaths` and `getServerSideProps`
-// only run in Node.js. Check the terminal to see the environment variables
-export async function getStaticProps() {
-  // Using the variables below in the browser will return `undefined`. Next.js doesn't
-  // expose environment variables unless they start with `NEXT_PUBLIC_`
-  console.log("[Node.js only] ENV_VARIABLE:", process.env.API_KEY);
-  console.log("[Node.js only] ENV_LOCAL_VARIABLE:", process.env.API_KEY);
-
-  return { props: {} };
-}
