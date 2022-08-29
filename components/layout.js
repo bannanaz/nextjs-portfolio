@@ -3,7 +3,7 @@ import Navbar from "./navbar";
 import MobileNavbar from "./mobilenavbar";
 import MobileHeader from "./mobileheader";
 import Footer from "./footer";
-import IsMobile from "../hooks/IsMobile";
+import IsMobile from "../Hooks/IsMobile";
 
 export default function Layout({ children }) {
   const { isMobile } = IsMobile();
